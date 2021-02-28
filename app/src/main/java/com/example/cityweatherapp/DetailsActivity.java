@@ -58,7 +58,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         //Edit button, with intent to start new acitivity
 
-        /*Button editBtn = findViewById(R.id.editBtn);
+        Button editBtn = findViewById(R.id.editBtn);
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,7 +66,7 @@ public class DetailsActivity extends AppCompatActivity {
                 intent.putExtra("position", position);
                 startActivity(intent);;
             }
-        })*/
+        });
 
     }
 }

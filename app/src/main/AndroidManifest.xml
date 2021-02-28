@@ -11,7 +11,12 @@
         android:theme="@style/Theme.CityWeatherApp">
         <activity android:name=".DetailsActivity"
             android:label="Details"/>
-        <activity android:name=".ListActivity">
+
+        <activity android:name=".EditActivity"
+            android:label="Edit"/>
+
+        <activity android:name=".ListActivity"
+            android:label="List">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

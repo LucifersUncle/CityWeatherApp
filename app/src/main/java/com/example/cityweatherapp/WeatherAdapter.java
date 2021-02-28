@@ -19,14 +19,14 @@ import java.util.List;
 public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.MyViewHolder> {
     Context ctx;
     private List<WeatherSample> weatherData = new ArrayList<>();
+    //private itemClickListener onClickListener;
 
     public WeatherAdapter(Context ctx, List<WeatherSample> weatherData) {
         this.ctx = ctx;
         this.weatherData = weatherData;
 
-        //this.dtlClickListener = dtlClickListener;
+        //this.onClickListener = onClickListener;
     }
-
 
     @NonNull
     @Override
@@ -34,6 +34,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.MyViewHo
         LayoutInflater inflater = LayoutInflater.from(ctx);
         View view = inflater.inflate(R.layout.row_data, parent, false);
         return new MyViewHolder(view);
+
     }
 
     @Override
@@ -49,9 +50,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.MyViewHo
                 ctx.getPackageName()
         );
         holder.flag.setImageResource(id);
-        holder.aclayout.setOnClickListener(new View.OnClickListener()
-
-        {
+        holder.aclayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ctx, DetailsActivity.class);
@@ -63,9 +62,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.MyViewHo
                 intent.putExtra("Rating", weatherData.get(position).getRating());
                 intent.putExtra("Weather", weatherData.get(position).getWeather());
                 ctx.startActivity(intent);
-
             }
-
         });
     }
 
@@ -79,10 +76,9 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.MyViewHo
         TextView country, weather, temp, rating;
         ImageView flag;
 
+        /*itemClickListener onClickListener;*/
+
         ConstraintLayout aclayout;
-
-
-        //dtlListener dtlClickListener;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -93,16 +89,15 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.MyViewHo
             flag = itemView.findViewById(R.id.flag);
             aclayout = itemView.findViewById(R.id.listactivityconstraint);
 
-            //this.dtlClickListener = detailsClickListener;
-            //itemView.setOnClickListener(this);
+            /*this.onClickListener = onClickListener;
+            itemView.setOnClickListener((View.OnClickListener) this);*/
         }
+        /*public void onClick(View v) {
+            onClickListener.onItemClick(getAdapterPosition());*/
+    }
+}
 
-        //@Override
-        //public void onClick(View v) {
-            //dtlClickListener.detailsClick(getAdapterPosition());
-        //}
-    }
-    //public interface dtlListener {
-        //void detailsClick(int position);
-    }
+
+    /*public interface itemClickListener {
+        void onItemClick(int position);*/
 

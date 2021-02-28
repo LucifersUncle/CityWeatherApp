@@ -5,7 +5,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +21,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ListActivity extends AppCompatActivity {
     @Override
@@ -24,7 +29,9 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_activity);
 
-        readWeatherData();
+        if(weatherData.isEmpty()) {
+            readWeatherData();
+        }
 
         //Recycler View set up
         RecyclerView weatherList = findViewById(R.id.weatherList);
@@ -80,6 +87,17 @@ public class ListActivity extends AppCompatActivity {
             Log.wtf("WeatherApp", "Error on line: " + line, e);
             e.printStackTrace();
         }
+    }
+    private void setApplicationLocale(String locale) {
+        Resources resources = getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            config.setLocale(new Locale(locale.toLowerCase()));
+        } else {
+            config.locale = new Locale(locale.toLowerCase());
+        }
+        resources.updateConfiguration(config, dm);
     }
 
 
