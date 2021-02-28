@@ -78,7 +78,6 @@
         android:layout_marginLeft="32dp"
         android:layout_marginTop="16dp"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/temp_text"
         app:layout_constraintTop_toBottomOf="@+id/city_details" />
 
@@ -90,7 +89,6 @@
         android:layout_marginLeft="32dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/humidity_text"
         app:layout_constraintTop_toBottomOf="@+id/temp_details" />
 
@@ -102,7 +100,6 @@
         android:layout_marginLeft="32dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/weather_text"
         app:layout_constraintTop_toBottomOf="@+id/humidity_details" />
 
@@ -114,7 +111,7 @@
         android:layout_marginLeft="64dp"
         android:layout_marginBottom="32dp"
         android:text="Back"
-        app:backgroundTint="#4CAF50"
+        app:backgroundTint="#016CA6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -126,7 +123,7 @@
         android:layout_marginRight="64dp"
         android:layout_marginBottom="32dp"
         android:text="Edit"
-        app:backgroundTint="#4CAF50"
+        app:backgroundTint="#016CA6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -134,7 +131,7 @@
         android:id="@+id/rating_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="44dp"
         android:text="Rating:"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/weather_text"
@@ -166,9 +163,9 @@
         android:id="@+id/notes_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="99dp"
-        android:layout_marginLeft="99dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginStart="192dp"
+        android:layout_marginLeft="192dp"
+        android:layout_marginTop="12dp"
         android:text="Notes:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rating_text" />

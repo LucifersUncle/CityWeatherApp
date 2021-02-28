@@ -1,4 +1,4 @@
-package com.example.cityweatherapp;
+package com.au600586.CityWeatherApp;
 
 import android.content.Context;
 import android.content.Intent;
@@ -29,7 +29,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.MyViewHo
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        LayoutInflater inflater = LayoutInflater.from(ctx);
+        LayoutInflater inflater = LayoutInflater.from((ctx));
         View view = inflater.inflate(R.layout.row_data, parent, false);
         return new MyViewHolder(view);
     }
@@ -51,6 +51,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.MyViewHo
                 intent.putExtra("Temp", weatherData.get(position).getTemp());
                 intent.putExtra("Rating", weatherData.get(position).getRating());
                 intent.putExtra("Weather", weatherData.get(position).getWeather());
+                intent.putExtra("imagesArray", imagesArray[position]);
                 intent.putExtra("Position", position);
 
                 ((ListActivity) ctx).startActivityForResult(intent, 666);

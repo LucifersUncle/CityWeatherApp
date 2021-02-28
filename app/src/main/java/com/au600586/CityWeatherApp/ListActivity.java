@@ -1,12 +1,14 @@
-package com.example.cityweatherapp;
+package com.au600586.CityWeatherApp;
 
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -14,11 +16,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class ListActivity extends AppCompatActivity {
 
@@ -36,6 +36,8 @@ public class ListActivity extends AppCompatActivity {
 
 
         //Recycler View set up
+        //==REFERENCE==//
+        //https://www.youtube.com/watch?v=18VcnYN5_LM&t=601s
         recyclerView = findViewById(R.id.weatherList);
         adapter = new WeatherAdapter(this, weatherData, flags);
         recyclerView.setAdapter(adapter);
@@ -69,13 +71,15 @@ public class ListActivity extends AppCompatActivity {
         }
     }
 
-
+    //==REFERENCE==//
+    //https://www.youtube.com/watch?v=i-TqNzUryn8
     //http://stackoverflow.com/a/19976110
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void readWeatherData() {
         InputStream is = getResources().openRawResource(R.raw.cityweatherdata);
 
         BufferedReader reader = new BufferedReader(
-                new InputStreamReader(is, Charset.forName("UTF-8"))
+                new InputStreamReader(is, StandardCharsets.UTF_8)
         );
 
         weatherData = new ArrayList<>();
@@ -101,7 +105,7 @@ public class ListActivity extends AppCompatActivity {
         WeatherSample sample = new WeatherSample();
 
         sample.setCity(tokens[0]);
-        sample.setCity(tokens[1]);
+        sample.setCountry(tokens[1]);
         sample.setTemp(Double.parseDouble(tokens[2]));
         sample.setHumidity(Double.parseDouble(tokens[3]));
         sample.setWeather(tokens[4]);

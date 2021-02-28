@@ -26,7 +26,7 @@
         android:layout_marginLeft="64dp"
         android:layout_marginBottom="32dp"
         android:text="Cancel"
-        app:backgroundTint="#4CAF50"
+        app:backgroundTint="#016CA6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -38,7 +38,7 @@
         android:layout_marginRight="64dp"
         android:layout_marginBottom="32dp"
         android:text="ok"
-        app:backgroundTint="#4CAF50"
+        app:backgroundTint="#016CA6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -46,9 +46,9 @@
         android:id="@+id/notes_text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginBottom="296dp"
+        android:layout_marginStart="236dp"
+        android:layout_marginLeft="236dp"
+        android:layout_marginBottom="36dp"
         android:text="User Notes:"
         app:layout_constraintBottom_toTopOf="@+id/cancelBtn"
         app:layout_constraintStart_toStartOf="parent" />
@@ -57,11 +57,12 @@
         android:id="@+id/notes_text_field"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="36dp"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.452"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/notes_text1" />
 
@@ -71,13 +72,13 @@
         android:layout_height="35dp"
         android:layout_marginStart="185dp"
         android:layout_marginLeft="185dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="185dp"
         android:layout_marginRight="185dp"
-        android:layout_marginBottom="64dp"
-        app:layout_constraintBottom_toTopOf="@+id/notes_text_field"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cityEdit_text" />
 
     <ImageView
         android:id="@+id/flag_edit"
@@ -99,12 +100,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="150dp"
         android:layout_marginLeft="150dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="68dp"
         android:layout_marginEnd="170dp"
         android:layout_marginRight="170dp"
         android:text="User Rating"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.286"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cityEdit_text" />
 
@@ -114,11 +115,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginLeft="28dp"
-        android:layout_marginTop="211dp"
+        android:layout_marginTop="216dp"
         android:layout_marginEnd="140dp"
         android:layout_marginRight="140dp"
         android:text="0.0"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.401"
         app:layout_constraintStart_toEndOf="@+id/rating_text1"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -1,4 +1,4 @@
-package com.example.cityweatherapp;
+package com.au600586.CityWeatherApp;
 
 public class WeatherSample {
     private String City;

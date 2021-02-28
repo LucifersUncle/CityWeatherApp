@@ -1,8 +1,7 @@
-package com.example.cityweatherapp;
+package com.au600586.CityWeatherApp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -11,8 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.util.List;
 
 public class EditActivity extends AppCompatActivity {
 
@@ -30,7 +27,7 @@ public class EditActivity extends AppCompatActivity {
         setContentView(R.layout.edit_activity);
 
         //Widgets
-        flag = findViewById(R.id.flag_details);
+        flag = findViewById(R.id.flag_edit);
         city = findViewById(R.id.cityEdit_text);
         rating = findViewById(R.id.rating_text1);
         notes = findViewById(R.id.notes_text_field);
@@ -50,13 +47,11 @@ public class EditActivity extends AppCompatActivity {
         okBtn.setOnClickListener(v -> {
                 Intent resultIntent = getIntent();
                 notesData = notes.getText().toString();
-
                 resultIntent.putExtra("Notes", notesData);
                 resultIntent.putExtra("Rating", Double.valueOf(seekBar.getProgress()));
                 setResult(RESULT_OK, resultIntent);
                 finish();
         });
-
 
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -79,7 +74,7 @@ public class EditActivity extends AppCompatActivity {
     }
 
     private void getData() {
-        if(getIntent().hasExtra("City") && getIntent().hasExtra("Temp") && getIntent().hasExtra("Weather") && getIntent().hasExtra("Humidity") && getIntent().hasExtra("imagesArray"))
+        if(getIntent().hasExtra("City"))
         {
             cityData = getIntent().getStringExtra("City");
             tempData = getIntent().getDoubleExtra("Temp",1);
