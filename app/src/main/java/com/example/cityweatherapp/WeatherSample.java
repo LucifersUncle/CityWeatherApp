@@ -3,20 +3,15 @@ package com.example.cityweatherapp;
 public class WeatherSample {
     private String City;
     private String Country;
-    private int Temp;
-    private int Humidity;
+    private double Temp;
+    private double Humidity;
     private String Weather;
     private Double Rating;
     private String Note;
 
 
-    public WeatherSample(String city, String country, int temp, int hum, String weather) {
-        City = city;
-        Country = country;
-        Temp = temp;
-        Humidity = hum;
-        Weather = weather;
-        Rating = 0.0;
+    public WeatherSample() {
+        setRating(0.0);
         Note = "Type note here";
     }
     public double getRating() {
@@ -43,14 +38,14 @@ public class WeatherSample {
     public double getTemp() {
         return Temp;
     }
-    public void setTemp(int temp) {
+    public void setTemp(double temp) {
         Temp = temp;
     }
 
     public double getHumidity() {
         return Humidity;
     }
-    public void setHumidity(int humidity) {
+    public void setHumidity(double humidity) {
         Humidity = humidity;
     }
 

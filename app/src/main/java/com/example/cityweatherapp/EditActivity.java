@@ -8,60 +8,53 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
 
 public class EditActivity extends AppCompatActivity {
+
+    TextView city, rating;
+    ImageView flag;
+    EditText notes;
+    SeekBar seekBar;
+    String  cityData, notesData;
+    double tempData, ratingData;
+    int image;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_activity);
 
-        //Intent click
-        Intent intent = getIntent();
-        int position = intent.getIntExtra("position", 0);
-
         //Widgets
-        ImageView flag = findViewById(R.id.flag_details);
-        TextView city = findViewById(R.id.cityEdit_text);
-        TextView rating = findViewById(R.id.rating_text1);
-        EditText notes = findViewById(R.id.notes_text_field);
-        SeekBar seekBar = findViewById(R.id.seekBar);
+        flag = findViewById(R.id.flag_details);
+        city = findViewById(R.id.cityEdit_text);
+        rating = findViewById(R.id.rating_text1);
+        notes = findViewById(R.id.notes_text_field);
+        seekBar = findViewById(R.id.seekBar);
 
-        //Get ressources
-        int id = getResources().getIdentifier(
-                ListActivity.weatherData.get(position).getCountry().toLowerCase(),
-                "drawable",
-                getPackageName()
-        );
-        flag.setImageResource(id);
-
-        city.setText(ListActivity.weatherData.get(position).getCity());
-        rating.setText(ListActivity.weatherData.get(position).getRating()+ "");
-        notes.setText(ListActivity.weatherData.get(position).getNote());
-        seekBar.setProgress((int)ListActivity.weatherData.get(position).getRating()*10);
+        getData();
+        setData();
 
         //Buttons
-        Button backBtn = findViewById(R.id.backBtn);
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), DetailsActivity.class);
-                intent.putExtra("position", position);
-                startActivity(intent);
-            }
+        Button cancelBtn = findViewById(R.id.cancelBtn);
+        cancelBtn.setOnClickListener(v -> {
+           setResult(RESULT_CANCELED);
+           finish();
         });
 
         Button okBtn = findViewById(R.id.okBtn);
-        okBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), DetailsActivity.class);
-                intent.putExtra("position", position);
-                startActivity(intent);
-            }
+        okBtn.setOnClickListener(v -> {
+                Intent resultIntent = getIntent();
+                notesData = notes.getText().toString();
+
+                resultIntent.putExtra("Notes", notesData);
+                resultIntent.putExtra("Rating", Double.valueOf(seekBar.getProgress()));
+                setResult(RESULT_OK, resultIntent);
+                finish();
         });
 
         //SeekBar
@@ -70,7 +63,7 @@ public class EditActivity extends AppCompatActivity {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                rating.setText(seekConvert(progress) + "");
+                rating.setText(String.format("User Rating: %s", Double.parseDouble(String.valueOf(progress))));
             }
 
             @Override
@@ -84,9 +77,28 @@ public class EditActivity extends AppCompatActivity {
             }
         });
     }
-    public double seekConvert(int progress) {
-        return (double)progress/10;
+
+    private void getData() {
+        if(getIntent().hasExtra("City") && getIntent().hasExtra("Temp") && getIntent().hasExtra("Weather") && getIntent().hasExtra("Humidity") && getIntent().hasExtra("imagesArray"))
+        {
+            cityData = getIntent().getStringExtra("City");
+            tempData = getIntent().getDoubleExtra("Temp",1);
+            image = getIntent().getIntExtra("imagesArray",1);
+            ratingData = getIntent().getDoubleExtra("Rating",1);
+            notesData = getIntent().getStringExtra("Notes");
+        }
+        else
+        {
+            Toast.makeText(this,"Intent Extra is empty, can't load in data", Toast.LENGTH_SHORT).show();
+        }
     }
 
+    private void setData() {
+        city.setText(cityData);
+        flag.setImageResource(image);
+        rating.setText(String.format("User Rating: %s", ratingData));
+        notes.setText(notesData);
+        seekBar.setProgress((int)ratingData);
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.example.cityweatherapp;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.style.TabStopSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -19,86 +21,100 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class ListActivity extends AppCompatActivity {
+
+    WeatherAdapter adapter;
+    RecyclerView recyclerView;
+    int[] flags = {R.drawable.dk, R.drawable.fi, R.drawable.us,R.drawable.au, R.drawable.na, R.drawable.sg, R.drawable.ru, R.drawable.ae, R.drawable.fo, R.drawable.us, R.drawable.fj, R.drawable.jp};
+    List<WeatherSample> weatherData = new ArrayList<>();
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_activity);
-
         if(weatherData.isEmpty()) {
             readWeatherData();
         }
 
         //Recycler View set up
-        RecyclerView weatherList = findViewById(R.id.weatherList);
-        WeatherAdapter adapter = new WeatherAdapter(this, weatherData);
-        weatherList.setAdapter(adapter);
-        weatherList.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView = findViewById(R.id.weatherList);
+        adapter = new WeatherAdapter(this, weatherData, flags);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //Exit Button
         Button exitBtn = findViewById(R.id.exitBtn);
-        exitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        exitBtn.setOnClickListener(f -> {
                 moveTaskToBack(true);
                 android.os.Process.killProcess(android.os.Process.myPid());
                 System.exit(1);
-            }
         });
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) { //intent callback
+        super.onActivityResult(requestCode, resultCode, intent);
+        if(requestCode == 666) {
+            if(resultCode == RESULT_OK)
+            {
+                int position = intent.getIntExtra("Position", 0);
 
-    public static List<WeatherSample> weatherData = new ArrayList<>();
+                String newNote = intent.getStringExtra("Notes");
+
+                weatherData.get(position).setRating(intent.getDoubleExtra("Rating", 0.0));
+                weatherData.get(position).setNote(newNote);
+
+                adapter = new WeatherAdapter(this, weatherData, flags);
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            }
+        }
+    }
+
+
     //http://stackoverflow.com/a/19976110
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void readWeatherData() {
         InputStream is = getResources().openRawResource(R.raw.cityweatherdata);
 
         BufferedReader reader = new BufferedReader(
-                new InputStreamReader(is, Charset.forName("UTF-8"))
+                new InputStreamReader(is, StandardCharsets.UTF_8)
         );
 
-        String line = "";
+        weatherData = new ArrayList<>();
         try {
             //step over header
-            reader.readLine();
-            while ((line = reader.readLine()) != null) {
-                // split by commas
+            String line = reader.readLine();
+            line = reader.readLine();
+
+            while (line != null) {
                 String[] tokens = line.split(",");
-
-                // read data
-                WeatherSample sample = new WeatherSample(
-                        tokens[0],
-                        tokens[1],
-                        Integer.parseInt(tokens[2]),
-                        Integer.parseInt(tokens[3]),
-                        tokens[4]
-                );
-
-                // add sample
+                WeatherSample sample = Mapper(tokens);
                 weatherData.add(sample);
 
-                // log
-                Log.d("WeatherApp", "Created: " + sample);
+
+                line = reader.readLine();
             }
         }catch(IOException e){
-            Log.wtf("WeatherApp", "Error on line: " + line, e);
+            Log.wtf("WeatherApp", "Error on line: ", e);
             e.printStackTrace();
         }
     }
-    private void setApplicationLocale(String locale) {
-        Resources resources = getResources();
-        DisplayMetrics dm = resources.getDisplayMetrics();
-        Configuration config = resources.getConfiguration();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            config.setLocale(new Locale(locale.toLowerCase()));
-        } else {
-            config.locale = new Locale(locale.toLowerCase());
-        }
-        resources.updateConfiguration(config, dm);
+
+    private WeatherSample Mapper(String[] tokens) {
+        WeatherSample sample = new WeatherSample();
+
+        sample.setCity(tokens[0]);
+        sample.setCity(tokens[1]);
+        sample.setTemp(Double.parseDouble(tokens[2]));
+        sample.setHumidity(Double.parseDouble(tokens[3]));
+        sample.setWeather(tokens[4]);
+
+        return sample;
     }
-
-
 }
